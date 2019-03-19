@@ -58,16 +58,16 @@ RUN ln -s /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java /usr/java/default/bin/j
 
 RUN $HADOOP_PREFIX/bin/hdfs namenode -format
 
-## fixing the libhadoop.so like a boss
-#RUN rm -rf /usr/local/hadoop/lib/native
-#RUN mv /tmp/native /usr/local/hadoop/lib
-#
-#ADD ssh_config /root/.ssh/config
-#RUN chmod 600 /root/.ssh/config
-#RUN chown root:root /root/.ssh/config
-#
-#ADD bootstrap.sh /etc/bootstrap.sh
-#RUN chown root:root /etc/bootstrap.sh
-#RUN chmod 700 /etc/bootstrap.sh
-#
-#ENV BOOTSTRAP /etc/bootstrap.sh
+# fixing the libhadoop.so like a boss
+RUN rm -rf /usr/local/hadoop/lib/native
+RUN mv /tmp/native /usr/local/hadoop/lib
+
+ADD ssh_config /root/.ssh/config
+RUN chmod 600 /root/.ssh/config
+RUN chown root:root /root/.ssh/config
+
+ADD bootstrap.sh /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh
+RUN chmod 700 /etc/bootstrap.sh
+
+ENV BOOTSTRAP /etc/bootstrap.sh
