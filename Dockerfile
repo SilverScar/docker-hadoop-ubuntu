@@ -1,6 +1,6 @@
-# Creates pseudo distributed hadoop 2.6.0 on Ubuntu 14.04
+# Creates pseudo distributed hadoop 2.7.1 on Ubuntu 16.04
 #
-# docker build -t sequenceiq/hadoop-ubuntu:2.6.0 .
+# docker build -t sequenceiq/hadoop-ubuntu:2.7.1 .
 
 FROM dockerhub.ops.inmobi.com/production-engg/docker-openjdk-jvm8-ubuntu-16.04:v2-20180919-2
 MAINTAINER SequenceIQ
@@ -52,18 +52,18 @@ ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
-RUN $HADOOP_PREFIX/bin/hdfs namenode -format
-
-# fixing the libhadoop.so like a boss
-RUN rm -rf /usr/local/hadoop/lib/native
-RUN mv /tmp/native /usr/local/hadoop/lib
-
-ADD ssh_config /root/.ssh/config
-RUN chmod 600 /root/.ssh/config
-RUN chown root:root /root/.ssh/config
-
-ADD bootstrap.sh /etc/bootstrap.sh
-RUN chown root:root /etc/bootstrap.sh
-RUN chmod 700 /etc/bootstrap.sh
-
-ENV BOOTSTRAP /etc/bootstrap.sh
+#RUN $HADOOP_PREFIX/bin/hdfs namenode -format
+#
+## fixing the libhadoop.so like a boss
+#RUN rm -rf /usr/local/hadoop/lib/native
+#RUN mv /tmp/native /usr/local/hadoop/lib
+#
+#ADD ssh_config /root/.ssh/config
+#RUN chmod 600 /root/.ssh/config
+#RUN chown root:root /root/.ssh/config
+#
+#ADD bootstrap.sh /etc/bootstrap.sh
+#RUN chown root:root /etc/bootstrap.sh
+#RUN chmod 700 /etc/bootstrap.sh
+#
+#ENV BOOTSTRAP /etc/bootstrap.sh
