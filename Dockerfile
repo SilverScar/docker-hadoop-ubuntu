@@ -95,3 +95,27 @@ EXPOSE 10020 19888
 EXPOSE 8030 8031 8032 8033 8040 8042 8088
 #Other ports
 EXPOSE 49707 2122
+
+#----------------------------------------------------------------------------------------------
+#Hive Metastore, Lens and Presto installation
+
+ENV HIVE_VERSION=2.1.0
+ENV HIVE_HOME=/usr/local/hive
+ENV PATH=$HIVE_HOME/bin:$PATH
+ENV HADOOP_HOME=/usr/local/hadoop
+ENV PATH=$PATH:$HADOOP_HOME/bin
+
+ENV TMPDIR /tmp
+
+#MySQL Installation
+RUN cd $TMPDIR && \
+     curl -s -LO  http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar && \
+     mv $TMPDIR/mysql-connector-java-5.1.30.jar $TMPDIR/mysql-connector-java.jar && \
+     cp $TMPDIR/mysql-connector-java.jar $HIVE_HOME/lib/
+
+ADD docker/mysql_startup.sh ${TMPDIR}/mysql_startup.sh
+RUN chmod +x ${TMPDIR}/mysql_startup.sh
+
+
+ENV TMPDIR=/tmp
+
