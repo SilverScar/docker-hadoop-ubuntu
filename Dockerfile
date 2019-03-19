@@ -113,7 +113,7 @@ RUN cd $TMPDIR && \
      mv $TMPDIR/mysql-connector-java-5.1.30.jar $TMPDIR/mysql-connector-java.jar && \
      cp $TMPDIR/mysql-connector-java.jar $HIVE_HOME/lib/
 
-ADD docker/mysql_startup.sh ${TMPDIR}/mysql_startup.sh
+ADD mysql_startup.sh ${TMPDIR}/mysql_startup.sh
 RUN chmod +x ${TMPDIR}/mysql_startup.sh
 
 
