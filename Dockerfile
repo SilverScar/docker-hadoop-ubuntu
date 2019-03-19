@@ -43,3 +43,25 @@ RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/had
 
 RUN mkdir $HADOOP_PREFIX/input
 RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
+
+# pseudo distributed
+ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
+RUN sed s/HOSTNAME/localhost/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
+ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
+
+ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
+ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
+
+RUN $HADOOP_PREFIX/bin/hdfs namenode -format
+
+# fixing the libhadoop.so like a boss
+RUN rm  /usr/local/hadoop/lib/native/*
+RUN curl -Ls http://dl.bintray.com/sequenceiq/sequenceiq-bin/hadoop-native-64-2.6.0.tar|tar -x -C /usr/local/hadoop/lib/native/
+
+ADD ssh_config /root/.ssh/config
+RUN chmod 600 /root/.ssh/config
+RUN chown root:root /root/.ssh/config
+
+ADD bootstrap.sh /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh
+RUN chmod 700 /etc/bootstrap.sh
