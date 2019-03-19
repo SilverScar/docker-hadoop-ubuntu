@@ -107,6 +107,12 @@ ENV PATH=$PATH:$HADOOP_HOME/bin
 
 ENV TMPDIR /tmp
 
+# Download hive
+RUN curl -s -O https://archive.apache.org/dist/hive/hive-2.1.0/apache-hive-2.1.0-bin.tar.gz && \
+	tar -zxf ./apache-hive-${HIVE_VERSION}-bin.tar.gz && \
+	mv ./apache-hive-${HIVE_VERSION}-bin $HIVE_HOME && \
+	rm -f ./apache-hive-${HIVE_VERSION}-bin.tar.gz
+
 #MySQL Installation
 RUN cd $TMPDIR && \
      curl -s -LO  http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar && \
