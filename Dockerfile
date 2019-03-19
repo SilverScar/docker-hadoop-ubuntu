@@ -123,5 +123,15 @@ ADD mysql_startup.sh ${TMPDIR}/mysql_startup.sh
 RUN chmod +x ${TMPDIR}/mysql_startup.sh
 
 
-ENV TMPDIR=/tmp
+ADD hadoop/hadoop-env.sh /tmp/
+ADD hadoop/core-site.xml /tmp/
+
+RUN cp /tmp/hadoop-env.sh $HADOOP_HOME/etc/hadoop/
+RUN cp /tmp/core-site.xml $HADOOP_HOME/etc/hadoop/
+
+RUN cd $HADOOP_HOME/share/hadoop/tools/lib && \
+	curl -O http://repo1.maven.org/maven2/com/microsoft/azure/azure-storage/2.0.0/azure-storage-2.0.0.jar && \
+    curl -O http://repo1.maven.org/maven2/org/apache/hadoop/hadoop-azure/2.7.3/hadoop-azure-2.7.3.jar && \
+	curl -O http://repo1.maven.org/maven2/com/microsoft/azure/azure-data-lake-store-sdk/2.1.5/azure-data-lake-store-sdk-2.1.5.jar && \
+    curl -O http://repo1.maven.org/maven2/org/apache/hadoop/hadoop-azure-datalake/3.0.0-alpha3/hadoop-azure-datalake-3.0.0-alpha3.jar
 
