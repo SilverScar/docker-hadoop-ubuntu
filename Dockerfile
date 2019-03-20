@@ -151,4 +151,21 @@ RUN cp /tmp/hive-site.xml $HIVE_HOME/conf/
 ADD files/metastore-start.sh /etc/metastore-start.sh
 RUN chmod +x /etc/metastore-start.sh && sleep 1
 
+# Environment variables
+ENV PRESTO_VERSION 0.215
+ENV OPT_DIR /opt
+ENV PRESTO_DIR /opt/presto
+ENV PRESTO_DATA_DIR /opt/presto/data
+
+ Update
+RUN apt-get update && \
+    apt-get install -y python uuid-runtime vim less
+
+# Download Presto
+RUN mkdir -p $OPT_DIR && \
+    cd $OPT_DIR && \
+    curl -LO http://repo1.maven.org/maven2/com/facebook/presto/presto-server/$PRESTO_VERSION/presto-server-$PRESTO_VERSION.tar.gz && \
+    tar xvf presto-server-$PRESTO_VERSION.tar.gz && \
+    mv presto-server-$PRESTO_VERSION presto && \
+    rm presto-server-$PRESTO_VERSION.tar.gz
 
