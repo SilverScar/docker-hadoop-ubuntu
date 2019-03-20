@@ -157,7 +157,7 @@ ENV OPT_DIR /opt
 ENV PRESTO_DIR /opt/presto
 ENV PRESTO_DATA_DIR /opt/presto/data
 
- Update
+#Update
 RUN apt-get update && \
     apt-get install -y python uuid-runtime vim less
 
@@ -169,3 +169,8 @@ RUN mkdir -p $OPT_DIR && \
     mv presto-server-$PRESTO_VERSION presto && \
     rm presto-server-$PRESTO_VERSION.tar.gz
 
+# Download Presto CLI
+RUN cd $PRESTO_DIR && \
+    curl -O http://repo1.maven.org/maven2/com/facebook/presto/presto-cli/$PRESTO_VERSION/presto-cli-$PRESTO_VERSION-executable.jar && \
+    mv presto-cli-$PRESTO_VERSION-executable.jar presto && \
+    chmod +x presto
