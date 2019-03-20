@@ -142,3 +142,13 @@ RUN cd $HIVE_HOME/lib && \
     curl -O http://repo1.maven.org/maven2/org/apache/hadoop/hadoop-azure/2.7.3/hadoop-azure-2.7.3.jar && \
 	curl -O http://repo1.maven.org/maven2/com/microsoft/azure/azure-data-lake-store-sdk/2.1.5/azure-data-lake-store-sdk-2.1.5.jar && \
     curl -O http://repo1.maven.org/maven2/org/apache/hadoop/hadoop-azure-datalake/3.0.0-alpha3/hadoop-azure-datalake-3.0.0-alpha3.jar
+
+EXPOSE 9083 8088 3306 8080
+
+ADD docker/hadoop/hive-site.xml /tmp/
+RUN cp /tmp/hive-site.xml $HIVE_HOME/conf/
+
+ADD files/metastore-start.sh /etc/metastore-start.sh
+RUN chmod +x /etc/metastore-start.sh && sleep 1
+
+
