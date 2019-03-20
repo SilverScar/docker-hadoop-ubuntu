@@ -145,7 +145,7 @@ RUN cd $HIVE_HOME/lib && \
 
 EXPOSE 9083 8088 3306 8080
 
-ADD docker/hadoop/hive-site.xml /tmp/
+ADD hadoop/hive-site.xml /tmp/
 RUN cp /tmp/hive-site.xml $HIVE_HOME/conf/
 
 ADD files/metastore-start.sh /etc/metastore-start.sh
